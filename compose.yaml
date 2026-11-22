@@ -1,0 +1,21 @@
+# docker compose up -d --build     (run in the repo folder on the Odroid)
+services:
+  kitchenlights:
+    build: .
+    image: kitchenlights
+    container_name: kitchenlights
+    restart: unless-stopped
+    # Apple Home finds the bridge via mDNS multicast, which does not pass
+    # Docker's bridge network: use the host's network (TCP port 51826).
+    network_mode: host
+    devices:
+      # Set PICO_DEVICE in .env (see .env.example).
+      - ${PICO_DEVICE:?set PICO_DEVICE in .env, see .env.example}:/dev/pico
+    volumes:
+      - type: bind  # recorded commands (tools.record --clean); must exist
+        source: ./buttons.json
+        target: /data/buttons.json
+        read_only: true
+        bind:
+          create_host_path: false
+      - ./homekit-state:/data/homekit-state  # pairing data, last known light state

@@ -1,0 +1,3 @@
+pyserial  # Pico USB bridge
+HAP-python[QRCode]  # Apple Home bridge (kitchenlights.homekit)
+# spidev  # only when the CC2500 is wired to a Raspberry Pi directly
