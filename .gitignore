@@ -1,0 +1,11 @@
+__pycache__/
+.pytest_cache/
+*.csv
+*.jsonl
+hunt-*/
+homekit-state/
+.venv/
+.env
+buttons.json
+colours.json
+dial.json

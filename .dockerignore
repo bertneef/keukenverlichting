@@ -1,0 +1,4 @@
+*
+!requirements.txt
+!kitchenlights/
+kitchenlights/__pycache__/

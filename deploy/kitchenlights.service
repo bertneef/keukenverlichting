@@ -1,0 +1,19 @@
+# systemd unit for the Apple Home bridge. Install from the repo folder with:
+#   sed "s|@USER@|$USER|g; s|@DIR@|$PWD|g" deploy/kitchenlights.service \
+#     | sudo tee /etc/systemd/system/kitchenlights.service
+[Unit]
+Description=Kitchen lights Apple Home bridge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=@USER@
+WorkingDirectory=@DIR@
+Environment=PYTHONUNBUFFERED=1
+ExecStart=@DIR@/.venv/bin/python -m kitchenlights.homekit --buttons @DIR@/buttons.json --state-dir @DIR@/homekit-state
+# on-failure includes exit code 1: the radio stopped responding
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
